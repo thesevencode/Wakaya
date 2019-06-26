@@ -57,15 +57,11 @@ Campos:
 
         values: String  // ['client'  ó 'salesman']
 
-    -company: -> No es obligatorio, Solo si el vendedor se registra como una Organizacion
-      {
-          name: String,
-          _id: String
-      }
-
+ 
 ###  Client
 
 Campos:
+
 
       -_id: String -> generado por la Base de datos
       
@@ -105,7 +101,10 @@ Campos:
 
 Campos:
 
+
       -_id: String -> generado por la Base de datos
+      
+      -user_id: String -> Obligatorio, obtenido por el modelo User
             
       -name: String -> Obligatorio
       
@@ -126,6 +125,7 @@ Campos:
 ###  Producer
 
 Campos:
+
 
       -_id: String -> generado por la Base de datos
       
