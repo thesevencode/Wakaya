@@ -8,6 +8,8 @@ const morgan = require('morgan')
 
 const routes = require('./app/routes')
 
+const { error } = require('../handlers')
+
 
 const port = process.env.PORT || 3000
 const app = express()
@@ -22,20 +24,11 @@ app.use(morgan('combined'))
 routes(app)
 
 if (!module.parent) { // verificamos que el archivo ha sido requerido
-    process.on('uncaughtException', handleFatalError)
-    process.on('unhandledRejection', handleFatalError)
+    process.on('uncaughtException', error().handleFatalError)
+    process.on('unhandledRejection', error().handleFatalError)
 
     server.listen(port, () => {
         console.log(`${chalk.green('[tragavo-api]')} server listened on port ${port}`)
     })
 }
 module.exports = server
-
-
-
-
-function handleFatalError(err) {
-    console.error(`${chalk.red('[fatal error]')} ${err.message}`)
-    console.error(err.stack)
-    process.exit(1)
-}
