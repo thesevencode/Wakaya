@@ -1,9 +1,9 @@
 let db = {}
 
-const database = 'mongodb://localhost:27017/tragavo'
+const database = process.env.DB_URL || "mongodb+srv://@wakayadb-dk6m4.mongodb.net/wakayaDB?retryWrites=true&w=majority"
 const config = {
-    user: process.env.DB_USER || '',
-    pass: process.env.DB_PASS || ''
+    user: process.env.DB_USER || 'juan',
+    pass: process.env.DB_PASS || 'loper102'
 }
 
 db.database = database
