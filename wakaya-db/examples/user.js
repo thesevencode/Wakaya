@@ -24,7 +24,7 @@ async function run () {
 //     kind: 'salesman', // client  or salesman
 //     company: {
 //         name: 'Empresa',
-//         uuid: '12345678'
+//         _id: '12345678'
 //     }
 //   }).catch(handleFatalError)
 

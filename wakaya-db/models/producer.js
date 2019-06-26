@@ -7,6 +7,10 @@ module.exports = async function setupProducerModel (uri, config) {
     const mongoose = await setupDatabase(uri, config)
 
     const schema = new Mongoose.Schema({
+        user_id: {
+            type: String,
+            required: true,
+        },
         name: {
             type: String,
             required: true,

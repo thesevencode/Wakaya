@@ -26,9 +26,35 @@ module.exports = function (organizationModel) {
 
     }
 
-    function addMembers () {
+    async function addMembers (_id, listMembers) {
 
+        const organization = await findById(_id)
+        if(organization) {
+            
+            // const newMembers = await organization.members.push(members)
+            const newMembers = await  organizationModel.updateOne(
+                    { _id },
+                    {
+                    $push: {
+                        members: {
+                            $each: listMembers
+                        }
+                    }
+                    }
+                )
+            return newMembers
+
+        }
+
+        return false
     }
+
+    async function updateMember (_id, member) {
+        const update  = await organizationModel.updateOne({
+            
+        })
+    }
+
 
     function findById (_id) {
 
@@ -51,7 +77,8 @@ module.exports = function (organizationModel) {
 
     return {
         createOrUpdate,//implementado
-        addMembers,
+        addMembers,//implementado
+        updateMember,
         findById,//implementado
         findByEmail,//implementado
         findAll//implementado

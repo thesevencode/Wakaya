@@ -28,7 +28,8 @@ module.exports = async function setupOrganizationModel(uri, config) {
             required: true
         },
         address: {
-            type: String
+            type: String,
+            required: true
         },
         url: {
             type: String
@@ -39,7 +40,7 @@ module.exports = async function setupOrganizationModel(uri, config) {
         members: {
             type: [ProducerModel.schema]
         }
-    })
+    }, { timestamps: true })
 
     return mongoose.model('organization', schema)
 

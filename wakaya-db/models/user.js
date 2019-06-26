@@ -25,7 +25,7 @@ module.exports = async function setupUserModel (uri, config) {
         },
         company: {
             name: { type: String },
-            uuid: { type: String }
+            _id: { type: String }
         }
     }, { timestamps: true, select: false })
 

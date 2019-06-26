@@ -33,8 +33,11 @@ module.exports = async function (uri, config) {
     const UserModel = await setupUserModel(uri, config)
     const OrganizationModel = await setupOrganizationModel(uri, config)
 
+    
     if (config.setup) {
-        await mongoose.connection.db.dropDatabase()
+        //falta implementar
+        await mongoose.connection.dropDatabase()
+
     }
 
     const User = setupUser(UserModel)
