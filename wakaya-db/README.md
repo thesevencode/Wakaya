@@ -2,6 +2,47 @@
 
 Gestor: MongoDB
 
+### Conexión
+
+    const db = require('wakaya-db')
+
+    const config = {
+    
+        url: process.env.DB_URL || "mongodb+srv://@wakayadb-dk6m4.mongodb.net/wakayaDB?retryWrites=true&w=majority",
+
+        config: {
+
+            user: process.env.DB_USER || 'user',
+
+            pass: process.env.DB_PASS || 'password'
+
+        }
+    
+    }
+
+    let services = null
+
+
+    module.exports = async function initDatabase () {
+      if (!services) {
+        debug('Connecting to database')
+        try {
+          services = await db(config.db.url, config.db.config)
+        } catch (e) { handleFatalError(e) }
+      }
+      return services // Organization, User
+    }
+
+
+    function handleFatalError (err) {
+      console.log('ERRORR')
+      console.error(err.message)
+      console.error(err.stack)
+      process.exit(1)
+    }
+
+
+
 A continuación se presenta las colecciones de la Base de datos:
 ###  User
 
