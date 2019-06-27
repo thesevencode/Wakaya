@@ -1,5 +1,4 @@
 const express = require('express')
-const DataBase = require('../../../wakaya-db')
     // const bcrypt = require('bcryptjs')
 
 const { error, response } = require('../../../handlers')
@@ -9,7 +8,7 @@ const router = express.Router()
 const errors = error()
 
 module.exports = async(DB) => {
-    const { Organization } = await DB
+    const { Organization } = await DB()
 
     router.post('/', async(req, res) => {
 
@@ -19,19 +18,23 @@ module.exports = async(DB) => {
         const organization = await Organization.createOrUpdate(body).catch(errors.handleFatalError)
 
         if (!organization) {
-            resp.resp500()
+            resp.resp500().catch(errors.handleFatalError)
         }
 
-        resp.resp201(organization)
+        resp.resp201(organization).catch(errors.handleFatalError)
 
     })
 
 
     router.get('', async(req, res) => {
+        const resp = response(res)
+        const organizations = await Organization.findAll().catch(errors.handleFatalError);
 
-        const organizations = await Organization.findAll();
+        if (!organizations) {
+            resp.resp500().catch(errors.handleFatalError)
+        }
 
-        res.send(organizations);
+        resp.resp200(organizations).catch(errors.handleFatalError)
 
     })
 
