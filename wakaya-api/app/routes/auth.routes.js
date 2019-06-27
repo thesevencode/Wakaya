@@ -24,17 +24,19 @@ module.exports = async(DB) => {
 
         const resp = response(res)
 
-        user = await User.findByEmail(body.email)
+        user = await User.findByEmailSelectPassword(body.email)
+
+        console.log(user)
 
         if (!user) {
             return resp.resp404(message = "El usuario no existe").catch(errors.handleFatalError)
         }
 
-        console.log(user)
-
         if (!bcrypt.compareSync(body.password, user.password)) {
             return resp.resp404(message = "El password no existe").catch(errors.handleFatalError)
         }
+
+        user = await User.findById(user._id).catch(errors.handleFatalError)
 
         const payload = {
             user: user,
@@ -64,7 +66,6 @@ module.exports = async(DB) => {
 
         body.password = bcrypt.hashSync(body.password, 10)
 
-        console.log(body)
         let user = null
 
         user = await User.findByEmail(body.email)
