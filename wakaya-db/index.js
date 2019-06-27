@@ -9,6 +9,7 @@ const setupProducerModel = require('./models/producer')
 //metodos
 const setupUser = require('./lib/user')
 const setupOrganization = require('./lib/organization')
+const setupProducer = require('./lib/producer')
 
 const defaults = require('defaults')
 
@@ -32,6 +33,7 @@ module.exports = async function (uri, config) {
     
     const UserModel = await setupUserModel(uri, config)
     const OrganizationModel = await setupOrganizationModel(uri, config)
+    const ProducerModel = await setupProducerModel(uri, config)
 
     
     if (config.setup) {
@@ -42,10 +44,12 @@ module.exports = async function (uri, config) {
 
     const User = setupUser(UserModel)
     const Organization = setupOrganization(OrganizationModel)
+    const Producer = setupProducer(ProducerModel)
 
     return {
         User,
-        Organization
+        Organization,
+        Producer
     }
 
 }

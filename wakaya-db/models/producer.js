@@ -2,34 +2,43 @@
 
 const Mongoose = require('mongoose')
 const setupDatabase = require('../lib/db')
+let model = null
 
 module.exports = async function setupProducerModel (uri, config) {
-    const mongoose = await setupDatabase(uri, config)
 
-    const schema = new Mongoose.Schema({
-        user_id: {
-            type: String,
-            required: true,
-        },
-        name: {
-            type: String,
-            required: true,
-        },
-        lastName: {
-            type: String,
-            required: true
-        },
-        phones: {
-            type: [Number],
-            required: true
-        },
-        categories: {
-            type: [String]
-        },
-        img: {
-            type: String
-        }
-    })
+    if(!model) {
+        const mongoose = await setupDatabase(uri, config)
 
-    return mongoose.model('producer', schema)
+        const schema = new Mongoose.Schema({
+            user_id: {
+                type: String,
+                required: true,
+            },
+            name: {
+                type: String,
+                required: true,
+            },
+            lastName: {
+                type: String,
+                required: true
+            },
+            phones: {
+                type: [Number],
+                required: true
+            },
+            categories: {
+                type: [String]
+            },
+            url: {
+                type: String
+            },
+            img: {
+                type: String
+            }
+        })
+        
+        model = mongoose.model('producer', schema)
+    }
+   
+    return model
 }

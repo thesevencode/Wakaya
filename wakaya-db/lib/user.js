@@ -41,10 +41,17 @@ module.exports = function (userModel) {
         return userModel.find()
     }
 
+    function findByEmailSelectPassword(email) {
+        return userModel.findOne({
+          email
+        }).select('password')
+    }
+
       return {
-          createOrUpdate,
-          findById,
-          findByEmail,
-          findAll
+          createOrUpdate,//implementado
+          findById,//implementado
+          findByEmail,//implementado
+          findAll,//implementado
+          findByEmailSelectPassword//implementado
       }
 }
