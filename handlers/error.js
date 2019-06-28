@@ -7,7 +7,7 @@ module.exports = () => {
         },
         handleError: function(err, state) {
             console.log(err)
-            state()
+            return state()
         }
     }
 }

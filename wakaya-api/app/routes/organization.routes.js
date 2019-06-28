@@ -10,18 +10,20 @@ const errors = error()
 module.exports = async(DB) => {
     const { Organization } = await DB()
 
-    router.post('/', async(req, res) => {
+    router.post('/', authentication.isLogged, async(req, res, next) => {
 
         const resp = response(res)
         const body = req.body
+        let organization
 
-        const organization = await Organization.createOrUpdate(body).catch(errors.handleFatalError)
+        console.log(req.user)
 
-        if (!organization) {
-            resp.resp500().catch(errors.handleFatalError)
+        try {
+            organization = await Organization.createOrUpdate(body)
+        } catch (e) {
+            return resp.resp500()
         }
-
-        resp.resp201(organization).catch(errors.handleFatalError)
+        resp.resp201(organization)
 
     })
 
@@ -31,10 +33,10 @@ module.exports = async(DB) => {
         const organizations = await Organization.findAll().catch(errors.handleFatalError);
 
         if (!organizations) {
-            resp.resp500().catch(errors.handleFatalError)
+            resp.resp500()
         }
 
-        resp.resp200(organizations).catch(errors.handleFatalError)
+        resp.resp200(organizations)
 
     })
 

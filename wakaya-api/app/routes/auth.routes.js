@@ -20,40 +20,51 @@ module.exports = async(DB) => {
     router.post('/login', async(req, res) => {
 
         const body = req.body
-        let user = null
+        let user
 
         const resp = response(res)
 
-        user = await User.findByEmailSelectPassword(body.email)
+        try {
+            user = await User.findByEmailSelectPassword(body.email)
+        } catch (e) {
+            return resp.resp500()
+        }
 
-        console.log(user)
 
         if (!user) {
-            return resp.resp404(message = "El usuario no existe").catch(errors.handleFatalError)
+            return resp.resp404(message = "El usuario no existe")
         }
 
         if (!bcrypt.compareSync(body.password, user.password)) {
-            return resp.resp404(message = "El password no existe").catch(errors.handleFatalError)
+            return resp.resp404(message = "El password no existe")
         }
 
-        user = await User.findById(user._id).catch(errors.handleFatalError)
+        user = await User.findById(user._id)
 
         const payload = {
             user: user,
-            permissions: [
-                "admin",
-                // "user:read",
-                // "user:write"
+            permissions: []
+        }
+        if (user.type == 'client') {
+            payload.permissions = [
+                "user:read"
+            ]
+        } else if (user.type == 'producer') {
+            payload.permissions = [
+                "user:write",
+                "user:read"
             ]
         }
+
+
         const token = jwt.sign(payload, auth.SEED, { expiresIn: 14400 }) // 4 horas
 
         userData = {
-            payload: payload,
+            user: user,
             token: token
         }
 
-        resp.resp200(userData).catch(errors.handleFatalError)
+        resp.resp200(userData)
 
 
 
@@ -80,15 +91,6 @@ module.exports = async(DB) => {
             return resp.resp404().catch(errors.handleFatalError)
         } else {
             user.password = ''
-            const payload = {
-                user: user,
-                permissions: [
-                    "admin",
-                    // "user:read",
-                    // "user:write"
-                ]
-            }
-            const token = jwt.sign(payload, auth.SEED, { expiresIn: 14400 }) // 4 horas
 
             userData = {
                 payload: payload,

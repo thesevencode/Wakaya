@@ -16,9 +16,8 @@ const middlewares = {
                 return resp.resp401()
             }
 
-            console.log(decoded)
             req.user = {
-                userData: decoded.user,
+                user: decoded.user,
                 permissions: decoded.permissions
             }
 
