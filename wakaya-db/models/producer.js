@@ -34,6 +34,13 @@ module.exports = async function setupProducerModel (uri, config) {
             },
             img: {
                 type: String
+            },
+            id_organization: {
+                type: String
+            },
+            organization: {
+                name:{ type: String },
+                _id: { type: String, unique: true }
             }
         })
         

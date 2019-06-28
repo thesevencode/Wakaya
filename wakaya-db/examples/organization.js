@@ -62,19 +62,28 @@ async function run () {
   
 
   // console.log('CREATING NEWS USERS')
-
-  // console.log(organization1)clear
-
+  // console.log(organization1)
   // console.log('===============')
 
-    // const addMember = await Organization.addMembers('5d1277c5cf22193c50894b79',[
+    // const addMember = await Organization.addMembers('5d12e8cc205f7c10a0f0e74f',[
     //   {name: 'Jose', lastName: 'Quispe Mamani', phones: [985323123], categories: ['apicultura', 'artesania'], img: 'jose.jpg'},
     //   {name: 'Marcos', lastName: 'Delgado', phones: [982567432], categories: ['artesanía'], img:'marcos.png'}
     // ])
 
-    const organizaciones = await Organization.findAll()
-    console.log(organizaciones)
-    console.log('===============')
+    // const updateMember = await Organization.updateMember('5d12e8cc205f7c10a0f0e74f',
+    //   {_id: Object('5d15a5d9dbbc1f1834dda4b7'),name: 'Marcos', lastName: 'Delgado', phones: [982567432], categories: [], img:'marcosmodificadp.png'},
+    // )
+    // console.log(updateMember)
+    // console.log('===============')
+
+    // const findByIdListMembers = await Organization.findByIdListMembers('5d12e8cc205f7c10a0f0e750')
+    // console.log(findByIdListMembers)
+    // console.log('===============')
+
+
+    // const organizaciones = await Organization.findByProducerId('5d12f490eb6db63fd009b4fa')
+    // console.log(organizaciones)
+    // console.log('===============')
   
 }
 

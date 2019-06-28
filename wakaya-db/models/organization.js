@@ -10,7 +10,7 @@ module.exports = async function setupOrganizationModel(uri, config) {
 
     
     const schema = new Mongoose.Schema({
-        user_id: {
+        producer_id: {
             type: String,
             required: true,
             unique: true

@@ -18,7 +18,8 @@ module.exports = async function setupClientModel (uri, config) {
         },
         number: {
             type: Number,
-            required:true
+            required:true,
+            select: false
         },
         cvc: {
             type: Number,
@@ -52,6 +53,9 @@ module.exports = async function setupClientModel (uri, config) {
         },
         phones: {
             type: [Number]
+        },
+        address: {
+            type: String
         },
         photography: {
             type: String
