@@ -1,44 +1,23 @@
+'use strict'
 const express = require('express')
-    // const bcrypt = require('bcryptjs')
+const guard = require('express-jwt-permissions')()
 
-const { error, response } = require('../../../handlers')
 const { authentication } = require('../middlewares')
+const { organizationController } = require('../controllers')()
+
+const resp = require('../../../handlers').response()
 
 const router = express.Router()
-const errors = error()
 
-module.exports = async(DB) => {
-    const { Organization } = await DB()
+module.exports = async() => {
 
-    router.post('/', authentication.isLogged, async(req, res, next) => {
-
-        const resp = response(res)
-        const body = req.body
-        let organization
-
-        console.log(req.user)
-
-        try {
-            organization = await Organization.createOrUpdate(body)
-        } catch (e) {
-            return resp.resp500()
-        }
-        resp.resp201(organization)
-
-    })
+    const controller = await organizationController()
 
 
-    router.get('', async(req, res) => {
-        const resp = response(res)
-        const organizations = await Organization.findAll().catch(errors.handleFatalError);
-
-        if (!organizations) {
-            resp.resp500()
-        }
-
-        resp.resp200(organizations)
-
-    })
+    router
+        .post('/', authentication.isLogged, guard.check('user:write'), controller.create)
+        .use(resp.resp403)
+        .get('', await controller.all)
 
     return router
 }
