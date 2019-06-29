@@ -16,8 +16,8 @@ module.exports = async() => {
 
     router
         .post('/', authentication.isLogged, guard.check('user:write'), controller.create)
-        .use(resp.resp403)
         .get('', await controller.all)
+        .use(resp.resp403)
 
     return router
 }

@@ -82,6 +82,10 @@ module.exports = async() => {
             return resp.resp500(message = "El password es necesario")
         }
 
+        if (!body.terms) {
+            return resp.resp500(message = "Acepata los terminos y condiciones")
+        }
+
         body.password = bcrypt.hashSync(body.password, 10)
 
         try {
@@ -89,6 +93,8 @@ module.exports = async() => {
         } catch (e) {
             return resp.resp500()
         }
+
+        user.password = ''
 
 
         resp.resp201(user)
@@ -100,6 +106,3 @@ module.exports = async() => {
         register
     }
 }
-
-// implementar funcions
-// -->create
