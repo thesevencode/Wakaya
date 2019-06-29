@@ -17,7 +17,7 @@ module.exports = function (producerModel) {
                     $set: producer
                 }
             )
-            return updated ? producerModel.findOne(cond) : existingProducer
+            return updated ? producerModel.findOne(cond) : null
         }
 
         const result = await producerModel.create(producer)
@@ -34,6 +34,14 @@ module.exports = function (producerModel) {
         return producerModel.findById(_id)
     }
 
+    function findByidOrganization (id_organization) {
+        const cond = {
+            id_organization
+        }
+
+        return producerModel.find(cond)
+    }
+
     function findByCategories (categories) {
         return producerModel.find({
             categories: { $in: categories }
@@ -46,7 +54,7 @@ module.exports = function (producerModel) {
             return null
         }
         
-        return producerModel.updateOne(
+        const update = await producerModel.updateOne(
             { _id },
             {
                 $push: {
@@ -57,6 +65,37 @@ module.exports = function (producerModel) {
             }
         )
 
+        return update ? true : false
+
+    }
+
+    async function addOrUpdateOrganization(_id, organization) {
+
+        if (!ObjectId.isValid(_id)) {
+            return null
+        }
+
+        const cond = {
+            _id
+        }
+
+        const updated = await producerModel.updateOne(cond,{
+           organization: organization 
+        })
+
+        return updated ? producerModel.findOne(cond, 'organization') : false
+    }
+    async function deleteOrganization (_id) {
+        const cond = {
+            _id
+        }   
+
+        const deleted = await producerModel.updateOne(cond,{
+            $unset: { 'organization': "" }
+        })
+
+        return deleted ? true: false
+        
     }
 
     function findAll () {
@@ -66,8 +105,11 @@ module.exports = function (producerModel) {
     return {
         createOrUpdate,//implementado
         findById,//implementado
+        findByidOrganization,//implemetado
         findByCategories,//implementado
         addCategorie,//implementado
+        addOrUpdateOrganization,//implementado
+        deleteOrganization,//implementado
         findAll//implementado
     }
 }

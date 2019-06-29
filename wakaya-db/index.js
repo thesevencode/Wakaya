@@ -5,11 +5,13 @@ const setupDatabase = require('./lib/db')
 const setupUserModel = require('./models/user')
 const setupOrganizationModel = require('./models/organization')
 const setupProducerModel = require('./models/producer')
+const setupClientModel = require('./models/client')
 
 //metodos
 const setupUser = require('./lib/user')
 const setupOrganization = require('./lib/organization')
 const setupProducer = require('./lib/producer')
+const setupClient = require('./lib/client')
 
 const defaults = require('defaults')
 
@@ -34,7 +36,7 @@ module.exports = async function (uri, config) {
     const UserModel = await setupUserModel(uri, config)
     const OrganizationModel = await setupOrganizationModel(uri, config)
     const ProducerModel = await setupProducerModel(uri, config)
-
+    const ClientModel = await setupClientModel(uri, config)
     
     if (config.setup) {
         //falta implementar
@@ -45,11 +47,13 @@ module.exports = async function (uri, config) {
     const User = setupUser(UserModel)
     const Organization = setupOrganization(OrganizationModel)
     const Producer = setupProducer(ProducerModel)
+    const Client = setupClient(ClientModel)
 
     return {
         User,
         Organization,
-        Producer
+        Producer,
+        Client
     }
 
 }

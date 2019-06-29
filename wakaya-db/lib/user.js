@@ -14,20 +14,38 @@ module.exports = function (userModel) {
             cond,
             { $set: user }
           )
-          return updated ? userModel.findOne(cond) : existingUser
+          return updated ? userModel.findOne(cond) : null
           // modificar
         }
-    
+
+        user.activate = false
         const result = await userModel.create(user)
         return result.toJSON()
     }
     
-    function findById (id) {
+    async function activateEmail (_id) {
+
+      if (!ObjectId.isValid(_id)) {
+        return null
+      }
+
+      const cond = {
+        _id
+      }
+
+      const activate = await userModel.updateOne(cond,{
+        activate: true
+      })
+
+      return activate ? true : false
+    }
+
+    function findById (_id) {
         
-        if (!ObjectId.isValid(id)) {
+        if (!ObjectId.isValid(_id)) {
           return null
         }
-        return userModel.findById(id)
+        return userModel.findById(_id)
 
     }
     
@@ -47,11 +65,12 @@ module.exports = function (userModel) {
         }).select('password')
     }
 
-      return {
-          createOrUpdate,//implementado
-          findById,//implementado
-          findByEmail,//implementado
-          findAll,//implementado
-          findByEmailSelectPassword//implementado
-      }
+    return {
+        createOrUpdate,//implementado
+        activateEmail,//implementado
+        findById,//implementado
+        findByEmail,//implementado
+        findAll,//implementado
+        findByEmailSelectPassword//implementado
+    }
 }

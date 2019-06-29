@@ -47,6 +47,7 @@ A continuación se presenta las colecciones de la Base de datos:
 ###  User
 
 Campos:
+
     -_id: String -> generado por la Base de datos
     
     -email: String -> obligatorio
@@ -55,9 +56,61 @@ Campos:
 
     -type: String -> obligatorio
 
-        values: String  // ['client'  ó 'salesman']
-
+        values: String  // ['client'  ó 'producer']
+    
+    -activate: Boolean -> por defecto sera False
+    
+    -terms: Boolean ->Obligatorio
  
+ 
+Funciones:
+
+    1) createOrUpdate(user)
+    
+            param: user -> Objeto
+            returns: 
+                - Objeto  -> Éxito
+                - null -> Solo si no se pude hacer el update
+                
+    2) activateEmail(_id)
+        
+            param: _id -> String
+            returns: 
+                - null -> si el Id no tiene el formato correcto
+                - true -> Éxito
+                - false -> Error
+                
+    3) findById(_id)
+    
+            param: _id -> String
+            returns: 
+                - null -> si el Id no tiene el formato correcto
+                - Objeto -> Éxito
+                - Error -> Generado por la base de datos
+                
+    4) findByEmail(email)
+    
+            param: email -> String
+            returns: 
+                - null -> si el Id no tiene el formato correcto
+                - Objeto -> Éxito
+                - Error -> Generado por la base de datos 
+                
+    5) findAll()
+    
+            returns: 
+                - [Objeto] -> Éxito
+                - Error -> Generado por la base de datos 
+                
+    6) findByEmailSelectPassword(email)
+    
+            param: email -> String
+            returns: 
+                - null -> si el Id no tiene el formato correcto
+                - Objeto: { password,_id} -> Éxito
+                - Error -> Generado por la base de datos 
+                
+        
 ###  Client
 
 Campos:
@@ -71,7 +124,11 @@ Campos:
       
       -lastName: String -> Obligatorio
       
-     -phones: [ Number ] -> Obligatorio}
+     -phones: [ Number ] -> Obligatorio
+     
+     -address : String 
+     
+     -photography : String
      
      -document : {    
         
@@ -96,6 +153,38 @@ Campos:
             expiration: Date
         
      }]
+     
+Funciones :
+
+    1) createOrUpdate(client)
+    
+            param: client -> Objeto
+            returns: 
+                - Objeto  -> Éxito
+                - null -> Solo si no se pude hacer el update 
+                
+    2) findByUserId(user_id)
+        
+            param: user_id -> String
+            returns: 
+                - null -> si el user_id no tiene el formato correcto
+                - Objeto -> Éxito
+                - Error -> Generado por la base de datos
+                
+    3) findById(_id)
+    
+            param: _id -> String
+            returns: 
+                - null -> si el Id no tiene el formato correcto
+                - Objeto -> Éxito
+                - Error -> Generado por la base de datos
+                
+    4) findAll()
+    
+            returns: 
+                - [Objeto] -> Éxito
+                - Error -> Generado por la base de datos      
+                
 
 ###  Organization
 
@@ -104,7 +193,7 @@ Campos:
 
       -_id: String -> generado por la Base de datos
       
-      -user_id: String -> Obligatorio, obtenido por el modelo User
+      -producer_id : String, Unique -> Obligatorio, obtenido por el modelo Producer
             
       -name: String -> Obligatorio
       
@@ -120,7 +209,81 @@ Campos:
      
      -url: String  -> No es Obligatorio
      
+     -img: String
+     
      -members:  [ Producer ]  -> Arreglo de objetos de la colección "Producer" 
+     
+     
+Funciones :
+
+    
+    1) createOrUpdate(organization)
+    
+            param: organization -> Objeto
+            returns: 
+                - Objeto  -> Éxito
+                - null -> Solo si no se pude hacer el update 
+                
+    2) addMembers(_id, listMembers)
+          
+            params: 
+                _id -> String
+                listMembers -> Arreglo de Producer
+            returns: 
+                - null 
+                        ->si el Id no tiene el formato correcto
+                        ->Si no se pudo realizar la accion
+                        -> Si no Existe la organization
+                - [Producer] -> Éxito, Lista de los miembros de la organization
+                - Error -> Generado por la base de datos
+
+    3) findByIdListMembers(_id)
+    
+            param: organization -> Objeto
+            returns: 
+                - null -> si el Id no tiene el formato correcto
+                - [Producer] -> Éxito, Lista de los miembros de la organization 
+                - Error -> Generado por la base de datos
+                
+    4) updateMember(_id, member)
+    
+            params: 
+                _id -> String
+                -member -> Objeto producer
+            returns: 
+                - null 
+                        ->Si no se pudo realizar la accion
+                - Objeto -> Éxito, Lista de los miembros de la organization
+              
+    5) findById(_id)
+    
+            param: _id -> String
+            returns: 
+                - null -> si el Id no tiene el formato correcto
+                - Objeto -> Éxito
+                - Error -> Generado por la base de datos
+                
+    6) findByProducerId(producer_id)
+    
+            param: producer_id -> String
+            returns: 
+                - null -> si el Id no tiene el formato correcto
+                - Objeto -> Éxito
+                - Error -> Generado por la base de datos
+                
+    7) findByEmail(email)
+    
+            param: email -> String
+            returns: 
+                - Objeto -> Éxito
+                - Error -> Generado por la base de datos
+    
+    8) findAll()
+    
+            returns: 
+                - [Objeto] -> Éxito, Arreglo de organizacioens
+                - Error -> Generado por la base de datos 
+
      
 ###  Producer
 
@@ -139,6 +302,80 @@ Campos:
      
      -categories: [ String ] -> Obligatorio, esto se agregará cuando se añadan productos 
      
-     -img: String -> No es obligatorio
+     -url: String 
      
+     -img: String
      
+     -id_organization: String -> Solo si pertenece a alguna organización
+     
+     -organization: //Solo si creó una organización, por lo tanto es el administrador.
+         {
+            name: String,
+            _id: String, Unique
+         }
+     
+Funciones : 
+
+    1) createOrUpdate(producer)
+    
+            param: producer -> Objeto
+            returns: 
+                - Objeto  -> Éxito
+                - null -> Solo si no se pude hacer el update 
+              
+    2) findById(_id)
+    
+            param: _id -> String
+            returns: 
+                - null -> si el Id no tiene el formato correcto
+                - Objeto -> Éxito
+                - Error -> Generado por la base de datos
+                
+    3) findByidOrganization(id_organization)
+    
+            param: id_organization -> String
+            returns: 
+                - Objeto -> Éxito
+                - Error -> Generado por la base de datos
+                
+    4) findByCategories(categories)
+    
+            param: categories -> Array[String] ->ejemplo : ['apicultura', 'artesania']
+            returns: 
+                - [Producer] -> Éxito, Arreglo de productores
+                - Error -> Generado por la base de datos
+                
+    5) addCategorie(_id, categorie)
+    
+            param: 
+                -_id: String
+                -categorie -> String
+            returns: 
+                - null -> si el Id no tiene el formato correcto
+                - True -> Exito
+                - False -> Error
+                
+    6) addOrUpdateOrganization(_id, organization)
+    
+            param: 
+                -_id: String
+                -organization -> Objeto { name: String, _id: String }
+            returns: 
+                - null -> si el Id no tiene el formato correcto
+                - Objeto: organization -> Exito
+                - False -> Error
+                
+    7) deleteOrganization(_id)
+    
+            param: 
+                -_id: String
+            returns: 
+                - True -> Exito
+                - False -> Error
+                
+    8) findAll()
+    
+            returns: 
+                - [Objeto] -> Éxito, Arreglo de productores
+                - Error -> Generado por la base de datos 
+

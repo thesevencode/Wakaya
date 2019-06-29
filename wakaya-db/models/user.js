@@ -22,6 +22,13 @@ module.exports = async function setupUserModel (uri, config) {
         type: {
             type: String,
             required: true
+        },
+        activate: {
+            type: Boolean
+        },
+        terms: {
+            type: Boolean,
+            required: true
         }
     }, { timestamps: true, select: false })
 

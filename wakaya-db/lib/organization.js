@@ -18,7 +18,7 @@ module.exports = function (organizationModel) {
                 }
             )
             
-            return updated ? organizationModel.findOne(cond) : existingOrganization
+            return updated ? organizationModel.findOne(cond) : null
         }
 
         const result = await organizationModel.create(organization)
@@ -31,7 +31,6 @@ module.exports = function (organizationModel) {
         const organization = await findById(_id)
         if(organization) {
             
-            // const newMembers = await organization.members.push(members)
             const newMembers = await  organizationModel.updateOne(
                     { _id },
                     {
@@ -42,17 +41,38 @@ module.exports = function (organizationModel) {
                     }
                     }
                 )
-            return newMembers
+            return newMembers ? findByIdListMembers(_id) : null
 
         }
 
-        return false
+        return null
+    }
+
+    function findByIdListMembers (_id) {
+        if (!ObjectId.isValid(_id)) {
+            return null
+        }
+
+        const cond = {
+            _id
+        }
+        return organizationModel.findById(cond).select('members')
     }
 
     async function updateMember (_id, member) {
-        const update  = await organizationModel.updateOne({
-            
+
+        const cond = {
+            _id,
+            "members._id": member._id
+        }
+
+        const update  = await organizationModel.updateOne(cond,{
+            $set: { "members.$": member }
         })
+
+        return update ? member : null
+
+
     }
 
 
@@ -63,6 +83,17 @@ module.exports = function (organizationModel) {
         }
 
         return organizationModel.findById(_id)
+    }
+
+    function findByProducerId (producer_id) {
+        if (!ObjectId.isValid(_id)) {
+            return null
+        }
+        
+        const cond = {
+            producer_id
+        }
+        return organizationModel.findOne(cond)
     }
 
     function findByEmail (email) {
@@ -78,8 +109,10 @@ module.exports = function (organizationModel) {
     return {
         createOrUpdate,//implementado
         addMembers,//implementado
-        updateMember,
+        findByIdListMembers,//implementado
+        updateMember,//implementado
         findById,//implementado
+        findByProducerId,//implementado
         findByEmail,//implementado
         findAll//implementado
     }

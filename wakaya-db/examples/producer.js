@@ -39,16 +39,28 @@ async function run () {
     // console.log('===============')
 
 
-    const producer = await Producer.findById('5d12f490eb6db63fd009b4fa')
-    console.log(producer)
-    console.log('===============')
+    // const producer = await Producer.findById('5d12f490eb6db63fd009b4fa')
+    // console.log(producer)
+    // console.log('===============')
 
-    const addMember =  await Organization.addMembers('5d12e8cc205f7c10a0f0e750',[producer])
+    // const addMember =  await Organization.addMembers('5d12e8cc205f7c10a0f0e750',[producer])
+    // console.log(addMember)
+    // console.log('===============')
 
+    // const addOrUpdateOrganizaton = await Producer.addOrUpdateOrganization('5d12f490eb6db63fd009b4fa',{
+    //   name: 'Wara',
+    //   _id: '5d12e8cc205f7c10a0f0e74f'
+    // })
+    // console.log(addOrUpdateOrganizaton)
+    // console.log('===============')
 
-    console.log(addMember)
-    console.log('===============')
+    // const deleteOrganization = await Producer.deleteOrganization('5d12f490eb6db63fd009b4fa')
+    // console.log(deleteOrganization)
+    // console.log('===============')
 
+      const producers = await Producer.findByidOrganization('5d12e8cc205f7c10a0f0e74f')
+      console.log(producers)
+      console.log('===============')
 
 }
 

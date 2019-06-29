@@ -45,12 +45,15 @@ async function run () {
 //   console.log(User2)
 //   console.log('===============')
 
-    const findByEmailSelectPassword = await User.findByEmailSelectPassword('juan151210@gmail.com')
-    console.log(findByEmailSelectPassword)
+    // const findByEmailSelectPassword = await User.findByEmailSelectPassword('juan151210@gmail.com')
+    // console.log(findByEmailSelectPassword)
+    // console.log('===============')
+    const activateEmail = await User.activateEmail('5d134198f4cc8e37a0f56145')
+    console.log(activateEmail)
     console.log('===============')
 
     const usuarios = await User.findAll()
-    // console.log(usuarios)
+    console.log(usuarios)
     console.log('===============')
   
 }
