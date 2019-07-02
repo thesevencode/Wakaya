@@ -124,7 +124,7 @@ Campos:
       
       -lastName: String -> Obligatorio
       
-     -phones: [ Number ] -> Obligatorio
+     -phones: [ Number ] 
      
      -address : String 
      
@@ -300,7 +300,7 @@ Campos:
       
      -phones: [ Number ] -> Obligatorio
      
-     -categories: [ String ] -> Obligatorio, esto se agregará cuando se añadan productos 
+     -categories: [ String ] -> esto se agregará cuando se añadan productos 
      
      -url: String 
      
