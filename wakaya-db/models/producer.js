@@ -23,8 +23,7 @@ module.exports = async function setupProducerModel (uri, config) {
                 required: true
             },
             phones: {
-                type: [Number],
-                required: true
+                type: [Number]
             },
             categories: {
                 type: [String]
