@@ -26,7 +26,7 @@ module.exports = async() => {
 
         try {
             producers = await Producer.findAll()
-        } catch {
+        } catch (e) {
             return resp.resp500()
         }
 
