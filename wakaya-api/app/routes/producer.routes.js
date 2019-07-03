@@ -16,6 +16,7 @@ module.exports = async() => {
 
     router
         .get('/', await controller.findAll)
+        .get('/producer/:id', await controller.findOne)
         // .post('/', authentication.isLogged, guard.check('user:write'), controller.create)
         .use(resp.resp403)
 

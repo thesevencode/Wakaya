@@ -34,6 +34,23 @@ module.exports = async() => {
 
     }
     async function findOne(req, res, next) {
+        let params = req.params
+        let producer
+
+        let resp = response(res)
+
+        try {
+            producer = await Producer.findById(params._id)
+        } catch {
+            return resp.resp500()
+        }
+
+        if (!producer) {
+            return resp.resp404(message = 'No existe un productor con este id')
+        }
+
+        resp.resp200(producer)
+
 
     }
     async function findByidOrganization(req, res, next) {
