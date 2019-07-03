@@ -115,7 +115,7 @@ module.exports = async() => {
                 data = Producer.createOrUpdate(body.data)
             }
 
-        } catch {
+        } catch (e) {
             return resp.resp500()
         }
 
@@ -159,7 +159,7 @@ module.exports = async() => {
 
         try {
             user = await User.findByEmail(body.email)
-        } catch {
+        } catch (e) {
             return resp.resp500(message = 'Tienes que tener un usuario')
         }
 
