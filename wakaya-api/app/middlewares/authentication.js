@@ -8,6 +8,7 @@ const middlewares = {
 
     isLogged: function(req, res, next) {
         const token = req.query.token;
+        let message
 
         const resp = response(res)
 
@@ -15,6 +16,9 @@ const middlewares = {
 
             if (err) {
                 return resp.resp401()
+            }
+            if (!decoded.user.activate) {
+                return resp.resp401(message = 'El usuario no esta activado')
             }
 
             req.user = {

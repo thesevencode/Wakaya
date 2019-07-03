@@ -13,11 +13,10 @@ module.exports = async() => {
 
 
     router
-        .get('', controller.all)
         .post('/login', controller.login)
         .post('/register', controller.register)
         .get('/activate', authentication.verfyEmail, controller.activate)
-        .post('/activate', controller.prueba)
+        .post('/activate', controller.sendEmailActivate)
 
 
     // router.get('', async(req, res) => {

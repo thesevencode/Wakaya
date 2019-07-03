@@ -2,7 +2,8 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
-const os = require('os')
+const handlebars = require('handlebars');
+const fs = require('fs');
 
 
 const DB = require('../../db')
@@ -76,6 +77,8 @@ module.exports = async() => {
         let user
         let data
 
+        console.log(req.body)
+
         try {
             user = await User.findByEmail(body.user.email)
         } catch (e) {
@@ -120,33 +123,76 @@ module.exports = async() => {
 
         const token = jwt.sign({ user }, auth.SEED, { expiresIn: 14400 }) // 4 horas
 
-        info = await transporter.sendMail({
-            from: 'manumayo8@gmail.com', // sender address
-            to: "juan.15121001@gmail.com", // list of receivers
-            subject: "Hello ✔", // Subject line
-            text: "Hello world?", // plain text body
-            html: `<a href='localhost:3000/api/auth/activate?token='${token}>Hello world?</a>` // html body
-        })
+
+        readHTMLFile('app/template/email.html', function(err, html) {
+            var template = handlebars.compile(html);
+            var replacements = {
+                uri: 'http://localhost:3000/api/auth/activate?token=' + token
+            }
+
+            var htmlToSend = template(replacements);
+            var mailOptions = {
+                from: 'manumayo8@gmail.com', // sender address
+                to: user.email, // list of receivers
+                subject: "Mensaje de verificacion", // Subject line
+                html: htmlToSend // html body
+            }
+
+            transporter.sendMail(mailOptions, function(error, response) {
+                if (error) {
+                    console.log(error);
+                    callback(error);
+                }
+            })
+        });
+
 
 
         resp.resp201({ user, data })
     }
 
-    async function prueba(req, res, next) {
+    async function sendEmailActivate(req, res, next) {
+        const resp = response(res)
+        const body = req.body
+        let message
+        let user
 
-        let user = {
-            _id: "5d12e5e2536758167c79438b"
+        try {
+            user = await User.findByEmail(body.email)
+        } catch {
+            return resp.resp500(message = 'Tienes que tener un usuario')
         }
+
+        if (!user) {
+            return resp.resp404()
+        }
+
 
         const token = jwt.sign({ user }, auth.SEED, { expiresIn: 14400 })
 
-        res.send(token);
-    }
+        readHTMLFile('app/template/email.html', function(err, html) {
+            var template = handlebars.compile(html);
+            var replacements = {
+                uri: 'http://localhost:3000/api/auth/activate?token=' + token
+            }
 
-    async function all(req, res, next) {
+            var htmlToSend = template(replacements);
+            var mailOptions = {
+                from: 'manumayo8@gmail.com', // sender address
+                to: user.email, // list of receivers
+                subject: "Mensaje de verificacion", // Subject line
+                html: htmlToSend // html body
+            }
 
-        const users = await User.findAll()
-        res.send(users);
+            transporter.sendMail(mailOptions, function(error, response) {
+                if (error) {
+                    console.log(error);
+                    callback(error);
+                }
+            })
+        })
+
+        resp.resp200();
     }
 
     async function activate(req, res, next) {
@@ -154,15 +200,13 @@ module.exports = async() => {
         const resp = response(res)
         let user
 
-        console.log(req.user)
-
         try {
             user = await User.activateEmail(req.user._id)
         } catch (e) {
             return resp.resp500(message = 'No es posible la validacion')
         }
 
-        resp.resp201(user)
+        resp.resp202(user)
     }
 
 
@@ -170,7 +214,18 @@ module.exports = async() => {
         login,
         register,
         activate,
-        prueba,
-        all
+        sendEmailActivate
     }
 }
+
+
+var readHTMLFile = function(path, callback) {
+    fs.readFile(path, { encoding: 'utf-8' }, function(err, html) {
+        if (err) {
+            throw err;
+            callback(err);
+        } else {
+            callback(null, html);
+        }
+    });
+};
