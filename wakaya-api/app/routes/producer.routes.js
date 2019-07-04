@@ -18,6 +18,23 @@ module.exports = async() => {
         .get('/', await controller.findAll)
         .get('/id_producer/:_id', await controller.findOne)
         .get('/id_organization/:_id', await controller.findByidOrganization)
+        .get('/by_categories', await controller.findByCategories)
+        .post('/organization', // Route
+            // Middlewares
+            authentication.isLogged,
+            guard.check('user:write'),
+            // Controller
+            await controller.addOrUpdateOrganization
+        )
+        .post('/categorie',
+            authentication.isLogged,
+            guard.check('user:write'),
+            await controller.addCategorie
+        )
+        .delete('/organization',
+            authentication.isLogged,
+            guard.check('user:write'),
+            await controller.deleteOrganization)
         // .post('/', authentication.isLogged, guard.check('user:write'), controller.create)
         .use(resp.resp403)
 
