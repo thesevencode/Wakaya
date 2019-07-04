@@ -127,7 +127,7 @@ module.exports = async() => {
         readHTMLFile('app/template/email.html', function(err, html) {
             var template = handlebars.compile(html);
             var replacements = {
-                uri: 'http://localhost:3000/api/auth/activate?token=' + token
+                uri: 'http://localhost:4200/#/activate/' + token
             }
 
             var htmlToSend = template(replacements);
@@ -173,7 +173,7 @@ module.exports = async() => {
         readHTMLFile('app/template/email.html', function(err, html) {
             var template = handlebars.compile(html);
             var replacements = {
-                uri: 'http://localhost:3000/api/auth/activate?token=' + token
+                uri: 'http://localhost:4200/#/activate/' + token
             }
 
             var htmlToSend = template(replacements);
@@ -206,7 +206,7 @@ module.exports = async() => {
             return resp.resp500(message = 'No es posible la validacion')
         }
 
-        resp.resp202(user)
+        resp.resp200(user)
     }
 
 

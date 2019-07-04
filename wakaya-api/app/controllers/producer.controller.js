@@ -41,7 +41,7 @@ module.exports = async() => {
 
         try {
             producer = await Producer.findById(params._id)
-        } catch {
+        } catch (e) {
             return resp.resp500()
         }
 
@@ -54,17 +54,78 @@ module.exports = async() => {
 
     }
     async function findByidOrganization(req, res, next) {
+        let params = req.params
+        let producers
 
+        let resp = response(res)
+
+        try {
+            producers = await Producer.findByidOrganization(params._id)
+        } catch (e) {
+            return resp.resp500()
+        }
+
+        if (!producers) {
+            return resp.resp404()
+        }
+
+        resp.resp200(producers)
     }
     async function addOrUpdateOrganization(req, res, next) {
+        let userData = req.user
+        let body = req.body
+        let producer
 
+        let resp = response(res)
+
+        try {
+            producer = await Producer.addOrUpdateOrganization(userData.user._id, body)
+        } catch (e) {
+            return resp.resp500()
+        }
+
+        if (!producer) {
+            return resp.resp404(message = 'Algo salio mal')
+        }
+
+        resp.resp200(producers)
     }
     async function deleteOrganization(req, res, next) {
+        let userData = req.user
+        let producer
 
+        let resp = response(res)
+
+        try {
+            producer = await Producer.deleteOrganization(userData.user._id)
+        } catch (e) {
+            return resp.resp500()
+        }
+
+        if (!producer) {
+            return resp.resp404(message = 'Algo salio mal')
+        }
+
+        resp.resp200(producer)
     }
 
     async function findByCategories(req, res, next) {
+        let body = req.body
+        let producer
 
+        let resp = response(res)
+
+        try {
+            producer = await Producer.addOrUpdateOrganization(userData.user._id, body)
+        } catch (e) {
+            return resp.resp500()
+        }
+
+        if (!producer) {
+            return resp.resp404(message = 'Algo salio mal')
+        }
+
+        resp.resp200(producers)
     }
     async function addCategorie(req, res, next) {
 
