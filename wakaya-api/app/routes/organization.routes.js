@@ -15,8 +15,25 @@ module.exports = async() => {
 
 
     router
-        .post('/', authentication.isLogged, guard.check('user:write'), controller.create)
-        .get('', await controller.all)
+        .get('/', controller.findAll)
+        .get('/id_organization/:_id', controller.findOne)
+        .get('/by_producer/:_id', controller.findByProducer)
+        .get('/list_members', controller.findByIdListMembers)
+        .post('/',
+            authentication.isLogged,
+            guard.check('user:write'),
+            controller.create
+        )
+        .post('/members/:_id',
+            authentication.isLogged,
+            guard.check('user:write'),
+            controller.addMembers
+        )
+        .put('member:_id',
+            authentication.isLogged,
+            guard.check('user:write'),
+            controller.updateMember
+        )
         .use(resp.resp403)
 
     return router
