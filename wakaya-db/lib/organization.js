@@ -1,119 +1,109 @@
 'use strict'
 
 const ObjectId = require('mongoose').Types.ObjectId
- 
+
 module.exports = function (organizationModel) {
+  async function createOrUpdate (organization) {
+    const cond = {
+      _id: organization._id
+    }
+    const existingOrganization = await organizationModel.findOne(cond)
 
-    async function createOrUpdate (organization) {
-        const cond = {
-            _id: organization._id
+    if (existingOrganization) {
+      const updated = await organizationModel.updateOne(
+        cond,
+        {
+          $set: organization
         }
-        const existingOrganization = await organizationModel.findOne(cond)
+      )
 
-        if (existingOrganization) {
-            const updated = await organizationModel.updateOne(
-                cond,
-                { 
-                    $set: organization
-                }
-            )
-            
-            return updated ? organizationModel.findOne(cond) : null
-        }
-
-        const result = await organizationModel.create(organization)
-        return result.toJSON()
-
+      return updated ? organizationModel.findOne(cond) : null
     }
 
-    async function addMembers (_id, listMembers) {
+    const result = await organizationModel.create(organization)
+    return result.toJSON()
+  }
 
-        const organization = await findById(_id)
-        if(organization) {
-            
-            const newMembers = await  organizationModel.updateOne(
-                    { _id },
-                    {
-                    $push: {
-                        members: {
-                            $each: listMembers
-                        }
-                    }
-                    }
-                )
-            return newMembers ? findByIdListMembers(_id) : null
-
+  async function addMembers (_id, listMembers) {
+    const organization = await findById(_id)
+    if (organization) {
+      const newMembers = await organizationModel.updateOne(
+        { _id },
+        {
+          $push: {
+            members: {
+              $each: listMembers
+            }
+          }
         }
-
-        return null
+      )
+      return newMembers ? findByIdListMembers(_id) : null
     }
 
-    function findByIdListMembers (_id) {
-        if (!ObjectId.isValid(_id)) {
-            return null
-        }
+    return null
+  }
 
-        const cond = {
-            _id
-        }
-        return organizationModel.findById(cond).select('members')
+  function findByIdListMembers (_id) {
+    if (!ObjectId.isValid(_id)) {
+      return null
     }
 
-    async function updateMember (_id, member) {
+    const cond = {
+      _id
+    }
+    return organizationModel.findById(cond).select('members')
+  }
 
-        const cond = {
-            _id,
-            "members._id": member._id
-        }
-
-        const update  = await organizationModel.updateOne(cond,{
-            $set: { "members.$": member }
-        })
-
-        return update ? member : null
-
-
+  async function updateMember (_id, member) {
+    const cond = {
+      _id,
+      'members._id': member._id
     }
 
+    const update = await organizationModel.updateOne(cond, {
+      $set: { 'members.$': member }
+    })
 
-    function findById (_id) {
+    return update ? member : null
+  }
 
-        if (!ObjectId.isValid(_id)) {
-            return null
-        }
-
-        return organizationModel.findById(_id)
+  function findById (_id) {
+    if (!ObjectId.isValid(_id)) {
+      return null
     }
 
-    function findByProducerId (producer_id) {
-        if (!ObjectId.isValid(_id)) {
-            return null
-        }
-        
-        const cond = {
-            producer_id
-        }
-        return organizationModel.findOne(cond)
+    return organizationModel.findById(_id)
+  }
+
+  function findByProducerId (producer_id) {
+    if (!ObjectId.isValid(producer_id)) {
+      return null
     }
 
-    function findByEmail (email) {
-        return organizationModel.findOne({
-            email: email
-        })
+    const cond = {
+      producer_id
     }
+    return organizationModel.findOne(cond)
+  }
 
-    function findAll () {
-        return organizationModel.find()
-    }
+  function findByEmail (email) {
+    return organizationModel.findOne({
+      email: email
+    })
+  }
 
-    return {
-        createOrUpdate,//implementado
-        addMembers,//implementado
-        findByIdListMembers,//implementado
-        updateMember,//implementado
-        findById,//implementado
-        findByProducerId,//implementado
-        findByEmail,//implementado
-        findAll//implementado
-    }
+  function findAll () {
+    return organizationModel.find()
+  }
+
+  return {
+    createOrUpdate, // implementado
+    addMembers, // implementado
+    findByIdListMembers, // implementado
+    updateMember, // implementado
+    findById, // implementado
+    findByProducerId, // implementado
+    findByEmail, // implementado
+    findAll// implementado
+  }
 }

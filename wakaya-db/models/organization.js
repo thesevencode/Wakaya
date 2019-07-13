@@ -3,50 +3,47 @@
 const Mongoose = require('mongoose')
 const setupDatabase = require('../lib/db')
 
+module.exports = async function setupOrganizationModel (uri, config) {
+  const mongoose = await setupDatabase(uri, config)
+  const ProducerModel = await require('./producer')(uri, config)
 
-module.exports = async function setupOrganizationModel(uri, config) {
-    const mongoose = await setupDatabase(uri, config)
-    const ProducerModel = await require('./producer')(uri, config)
+  const schema = new Mongoose.Schema({
+    producer_id: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    name: {
+      type: String,
+      required: true
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    type: {
+      type: String,
+      required: true
+    },
+    phones: {
+      type: [Number],
+      required: true
+    },
+    address: {
+      type: String,
+      required: true
+    },
+    url: {
+      type: String
+    },
+    img: {
+      type: String
+    },
+    members: {
+      type: [ProducerModel.schema]
+    }
+  }, { timestamps: true })
 
-    
-    const schema = new Mongoose.Schema({
-        producer_id: {
-            type: String,
-            required: true,
-            unique: true
-        },
-        name: {
-            type: String,
-            required: true
-        },
-        email: {
-            type: String, 
-            required: true,
-            unique: true
-        },
-        type: {
-            type: String,
-            required: true
-        },
-        phones: {
-            type: [Number],
-            required: true
-        },
-        address: {
-            type: String,
-            required: true
-        },
-        url: {
-            type: String
-        },
-        img: {
-            type: String
-        },
-        members: {
-            type: [ProducerModel.schema]
-        }
-    }, { timestamps: true })
-
-    return mongoose.model('organization', schema)
-
+  return mongoose.model('organization', schema)
 }

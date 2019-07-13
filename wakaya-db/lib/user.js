@@ -3,74 +3,71 @@
 const ObjectId = require('mongoose').Types.ObjectId
 
 module.exports = function (userModel) {
-    async function createOrUpdate (user) {
-        const cond = {
-          _id: user._id
-        }
-        const existingUser = await userModel.findOne(cond)
-    
-        if (existingUser) {
-          const updated = await userModel.updateOne(
-            cond,
-            { $set: user }
-          )
-          return updated ? userModel.findOne(cond) : null
-          // modificar
-        }
-
-        user.activate = false
-        const result = await userModel.create(user)
-        return result.toJSON()
+  async function createOrUpdate (user) {
+    const cond = {
+      _id: user._id
     }
-    
-    async function activateEmail (_id) {
+    const existingUser = await userModel.findOne(cond)
 
-      if (!ObjectId.isValid(_id)) {
-        return null
-      }
-
-      const cond = {
-        _id
-      }
-
-      const activate = await userModel.updateOne(cond,{
-        activate: true
-      })
-
-      return activate ? true : false
+    if (existingUser) {
+      const updated = await userModel.updateOne(
+        cond,
+        { $set: user }
+      )
+      return updated ? userModel.findOne(cond) : null
+      // modificar
     }
 
-    function findById (_id) {
-        
-        if (!ObjectId.isValid(_id)) {
-          return null
-        }
-        return userModel.findById(_id)
+    user.activate = false
+    const result = await userModel.create(user)
+    return result.toJSON()
+  }
 
-    }
-    
-    function findByEmail (email) {
-          return userModel.findOne({
-              email: email
-          })
+  async function activateEmail (_id) {
+    if (!ObjectId.isValid(_id)) {
+      return null
     }
 
-    function findAll () {
-        return userModel.find()
+    const cond = {
+      _id
     }
 
-    function findByEmailSelectPassword(email) {
-        return userModel.findOne({
-          email
-        }).select('password')
-    }
+    const activate = await userModel.updateOne(cond, {
+      activate: true
+    })
 
-    return {
-        createOrUpdate,//implementado
-        activateEmail,//implementado
-        findById,//implementado
-        findByEmail,//implementado
-        findAll,//implementado
-        findByEmailSelectPassword//implementado
+    return !!activate
+  }
+
+  function findById (_id) {
+    if (!ObjectId.isValid(_id)) {
+      return null
     }
+    return userModel.findById(_id)
+  }
+
+  function findByEmail (email) {
+    return userModel.findOne({
+      email: email
+    })
+  }
+
+  function findAll () {
+    return userModel.find()
+  }
+
+  function findByEmailSelectPassword (email) {
+    return userModel.findOne({
+      email
+    }).select('password')
+  }
+
+  return {
+    createOrUpdate, // implementado
+    activateEmail, // implementado
+    findById, // implementado
+    findByEmail, // implementado
+    findAll, // implementado
+    findByEmailSelectPassword// implementado
+  }
 }

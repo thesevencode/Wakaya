@@ -10,8 +10,6 @@ async function run () {
   }
   const { Organization } = await db(uri, config).catch(handleFatalError)
 
-
-
   // const organization1 = await Organization.createOrUpdate({
   //   user_id: '5d12e5e3536758167c79438c',
   //   name: 'Wara',
@@ -58,33 +56,28 @@ async function run () {
   //   members: []
   // }).catch(handleFatalError)
 
-
-  
-
   // console.log('CREATING NEWS USERS')
   // console.log(organization1)
   // console.log('===============')
 
-    // const addMember = await Organization.addMembers('5d12e8cc205f7c10a0f0e74f',[
-    //   {name: 'Jose', lastName: 'Quispe Mamani', phones: [985323123], categories: ['apicultura', 'artesania'], img: 'jose.jpg'},
-    //   {name: 'Marcos', lastName: 'Delgado', phones: [982567432], categories: ['artesanía'], img:'marcos.png'}
-    // ])
+  // const addMember = await Organization.addMembers('5d12e8cc205f7c10a0f0e74f',[
+  //   {name: 'Jose', lastName: 'Quispe Mamani', phones: [985323123], categories: ['apicultura', 'artesania'], img: 'jose.jpg'},
+  //   {name: 'Marcos', lastName: 'Delgado', phones: [982567432], categories: ['artesanía'], img:'marcos.png'}
+  // ])
 
-    // const updateMember = await Organization.updateMember('5d12e8cc205f7c10a0f0e74f',
-    //   {_id: Object('5d15a5d9dbbc1f1834dda4b7'),name: 'Marcos', lastName: 'Delgado', phones: [982567432], categories: [], img:'marcosmodificadp.png'},
-    // )
-    // console.log(updateMember)
-    // console.log('===============')
+  // const updateMember = await Organization.updateMember('5d12e8cc205f7c10a0f0e74f',
+  //   {_id: Object('5d15a5d9dbbc1f1834dda4b7'),name: 'Marcos', lastName: 'Delgado', phones: [982567432], categories: [], img:'marcosmodificadp.png'},
+  // )
+  // console.log(updateMember)
+  // console.log('===============')
 
-    // const findByIdListMembers = await Organization.findByIdListMembers('5d12e8cc205f7c10a0f0e750')
-    // console.log(findByIdListMembers)
-    // console.log('===============')
+  // const findByIdListMembers = await Organization.findByIdListMembers('5d12e8cc205f7c10a0f0e750')
+  // console.log(findByIdListMembers)
+  // console.log('===============')
 
-
-    // const organizaciones = await Organization.findByProducerId('5d12f490eb6db63fd009b4fa')
-    // console.log(organizaciones)
-    // console.log('===============')
-  
+  // const organizaciones = await Organization.findByProducerId('5d12f490eb6db63fd009b4fa')
+  // console.log(organizaciones)
+  // console.log('===============')
 }
 
 function handleFatalError (err) {

@@ -11,57 +11,51 @@ async function run () {
 
   const { Producer, Organization } = await db(uri, config).catch(handleFatalError)
 
+    // const producer1 = await Producer.createOrUpdate({
+    //   _id : '5d12f490eb6db63fd009b4fa',
+    //   user_id: '5d29882797070d4ca8433c6c,',
+    //   name: 'Lourdes',
+    //   lastName: 'Medina Quispe',
+    //   phones: [987657890],
+    //   categories: ['apicultura'],
+    //   url: '',
+    //   img: 'lourdes.png',
+    // }).catch(handleFatalError)
 
+  // const addCategorie = await Producer.addCategorie('5d12f490eb6db63fd009b4fa', 'chocolate')
+  // console.log(addCategorie)
+  // console.log('===============')
 
-//   const producer1 = await Producer.createOrUpdate({
-//     _id : '5d12f490eb6db63fd009b4fa',
-//     user_id: '5d12e78c24328748c82f267f',
-//     name: 'Lourdes',
-//     lastName: 'Medina Quispe',
-//     phones: [987657890],
-//     categories: ['chocolate'],
-//     url: '',
-//     img: 'lourdes.png',
-//   }).catch(handleFatalError)
+  // const producersByCategories = await Producer.findByCategories(['apicultura'])
+  // console.log(producersByCategories)
+  // console.log('===============')
 
-  
-    // const addCategorie = await Producer.addCategorie('5d12f490eb6db63fd009b4fa', 'chocolate')
-    // console.log(addCategorie)
-    // console.log('===============')
+  // const producers = await Producer.findAll()
+  // console.log(producers)
+  // console.log('===============')
 
+  // const producer = await Producer.findById('5d12f490eb6db63fd009b4fa')
+  // console.log(producer)
+  // console.log('===============')
 
-    // const producersByCategories = await Producer.findByCategories(['apicultura'])
-    // console.log(producersByCategories)
-    // console.log('===============')
+  // const addMember =  await Organization.addMembers('5d12e8cc205f7c10a0f0e750',[producer])
+  // console.log(addMember)
+  // console.log('===============')
 
-    // const producers = await Producer.findAll()
-    // console.log(producers)
-    // console.log('===============')
+  // const addOrUpdateOrganizaton = await Producer.addOrUpdateOrganization('5d12f490eb6db63fd009b4fa',{
+  //   name: 'Wara',
+  //   _id: '5d12e8cc205f7c10a0f0e74f'
+  // })
+  // console.log(addOrUpdateOrganizaton)
+  // console.log('===============')
 
+  // const deleteOrganization = await Producer.deleteOrganization('5d12f490eb6db63fd009b4fa')
+  // console.log(deleteOrganization)
+  // console.log('===============')
 
-    // const producer = await Producer.findById('5d12f490eb6db63fd009b4fa')
-    // console.log(producer)
-    // console.log('===============')
-
-    // const addMember =  await Organization.addMembers('5d12e8cc205f7c10a0f0e750',[producer])
-    // console.log(addMember)
-    // console.log('===============')
-
-    // const addOrUpdateOrganizaton = await Producer.addOrUpdateOrganization('5d12f490eb6db63fd009b4fa',{
-    //   name: 'Wara',
-    //   _id: '5d12e8cc205f7c10a0f0e74f'
-    // })
-    // console.log(addOrUpdateOrganizaton)
-    // console.log('===============')
-
-    // const deleteOrganization = await Producer.deleteOrganization('5d12f490eb6db63fd009b4fa')
-    // console.log(deleteOrganization)
-    // console.log('===============')
-
-      const producers = await Producer.findByidOrganization('5d12e8cc205f7c10a0f0e74f')
-      console.log(producers)
-      console.log('===============')
-
+  const producers = await Producer.findByidOrganization('5d12e8cc205f7c10a0f0e74f')
+  console.log(producers)
+  console.log('===============')
 }
 
 function handleFatalError (err) {
