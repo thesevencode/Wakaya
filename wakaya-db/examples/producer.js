@@ -11,16 +11,25 @@ async function run () {
 
   const { Producer, Organization } = await db(uri, config).catch(handleFatalError)
 
-    // const producer1 = await Producer.createOrUpdate({
-    //   _id : '5d12f490eb6db63fd009b4fa',
-    //   user_id: '5d29882797070d4ca8433c6c,',
-    //   name: 'Lourdes',
-    //   lastName: 'Medina Quispe',
-    //   phones: [987657890],
-    //   categories: ['apicultura'],
-    //   url: '',
-    //   img: 'lourdes.png',
-    // }).catch(handleFatalError)
+    const producer1 = await Producer.createOrUpdate({
+      user_id: '5d51795ed9c82c15c466f18d',
+      name: 'Denis Ricardo',
+      lastName: 'Vilcas Villalba',
+      phones: [987657890],
+      categories: ['apicultura'],
+      url: '',
+      img: 'denis.png',
+    }).catch(handleFatalError)
+
+    const producer2 = await Producer.createOrUpdate({
+      user_id: '5d51795ed9c82c15c466f18e',
+      name: 'Sadam Houseim',
+      lastName: 'Sucaticona Apaza',
+      phones: [987657890],
+      categories: ['chocolate'],
+      url: '',
+      img: 'sadam.png',
+    }).catch(handleFatalError)
 
   // const addCategorie = await Producer.addCategorie('5d12f490eb6db63fd009b4fa', 'chocolate')
   // console.log(addCategorie)

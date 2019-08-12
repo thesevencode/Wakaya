@@ -13,19 +13,48 @@ async function run () {
   const { Product } = await db(uri, config).catch(handleFatalError)
 
     // const product1 = await Product.createOrUpdate({
-    //   id_producer : '5d12f490eb6db63fd009b4fa',
-    //   name: 'Caja de bombon',
-    //   description: 'Descripcio simple',
-    //   categories: ['chocolatería'],
+    //   id_producer : '5d51795ed9c82c15c466f18d',
+    //   name: 'Botella de miel',
+    //   description: 'Miel de abeja embotellada',
+    //   categories: ['apicultura'],
     //   records: [],
-    //   price: 129.87,
-    //   stock: 1000,
+    //   price: 20.50,
+    //   stock: 150,
     //   qualifications: [],
     //   comments: [],
     //   offer: 0
     // }).catch(handleFatalError)
 
-  
+    // const product2 = await Product.createOrUpdate({
+    //   id_producer : '5d51795ed9c82c15c466f18e',
+    //   name: 'Caja de bombon',
+    //   description: 'Chocolates hechos de cacao',
+    //   categories: ['chocolate'],
+    //   records: [],
+    //   price: 50.00,
+    //   stock: 50,
+    //   qualifications: [],
+    //   comments: [],
+    //   offer: 0
+    // }).catch(handleFatalError)
+
+    // const product3 = await Product.createOrUpdate({
+    //   id_producer : '5d51795ed9c82c15c466f18d',
+    //   name: 'Copoazu licor',
+    //   description: 'Bebida elaborada por la fruta copoazu',
+    //   categories: ['licor'],
+    //   records: [],
+    //   price: 10.87,
+    //   stock: 300,
+    //   qualifications: [],
+    //   comments: [],
+    //   offer: 0
+    // }).catch(handleFatalError)
+
+    // const updateStock = await Product.updateStock('5d517c642d3346572838fda0', 100)
+    // console.log(updateStock)
+    // console.log('===============')
+
     // const productsByCategories = await Product.findByCategories(['manualidades'])
     // console.log(productsByCategories)
     // console.log('===============')

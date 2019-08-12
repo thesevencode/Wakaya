@@ -7,6 +7,7 @@ const setupOrganizationModel = require('./models/organization')
 const setupProducerModel = require('./models/producer')
 const setupClientModel = require('./models/client')
 const setupProductModel = require('./models/product')
+const setupSaleModel = require('./models/sale')
 
 // metodos
 const setupUser = require('./lib/user')
@@ -14,6 +15,7 @@ const setupOrganization = require('./lib/organization')
 const setupProducer = require('./lib/producer')
 const setupClient = require('./lib/client')
 const setupProduct = require('./lib/product')
+const setupSale = require('./lib/sale')
 
 const defaults = require('defaults')
 
@@ -40,6 +42,7 @@ module.exports = async function (uri, config) {
   const ProducerModel = await setupProducerModel(uri, config)
   const ClientModel = await setupClientModel(uri, config)
   const ProductModel = await setupProductModel(uri, config)
+  const SaleModel = await setupSaleModel(uri, config)
 
   if (config.setup) {
     // falta implementar
@@ -51,12 +54,14 @@ module.exports = async function (uri, config) {
   const Producer = setupProducer(ProducerModel)
   const Client = setupClient(ClientModel)
   const Product = setupProduct(ProductModel)
+  const Sale = setupSale(SaleModel)
 
   return {
     User,
     Organization,
     Producer,
     Client,
-    Product
+    Product,
+    Sale
   }
 }

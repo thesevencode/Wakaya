@@ -10,31 +10,31 @@ async function run () {
   }
   const { Client } = await db(uri, config).catch(handleFatalError)
 
-  //   const client1 = await Client.createOrUpdate({
-  //     user_id: '5d12f1eba0a4fe03942c9f55',
-  //     name: 'cliente 1',
-  //     lastName: 'lopez perez',
-  //     phones: [987564321, 987657890],
-  //     address: 'Jr. Sinchi Roca',
-  //     photography: 'wara.png',
-  //     document: {
-  //         type: 'dni',
-  //         number: 71632670
-  //     }
-  //   }).catch(handleFatalError)
+    const client1 = await Client.createOrUpdate({
+      user_id: '5d51795fd9c82c15c466f18f',
+      name: 'Juan Manuel',
+      lastName: 'Delgado Marcos',
+      phones: [987564321, 987657890],
+      address: 'Av. Madre de Dios',
+      photography: 'wara.png',
+      document: {
+          type: 'dni',
+          number: 71632678
+      }
+    }).catch(handleFatalError)
 
-  //   const client2 = await Client.createOrUpdate({
-  //     user_id: '5d134198f4cc8e37a0f56145',
-  //     name: 'cliente 2',
-  //     lastName: 'Wareloz ',
-  //     phones: [987564321, 987657890],
-  //     address: 'Jr. Sinchi Roca',
-  //     photography: 'wara.png',
-  //     document: {
-  //         type: 'dni',
-  //         number: 71632670
-  //     }
-  //   }).catch(handleFatalError)
+    const client2 = await Client.createOrUpdate({
+      user_id: '5d51795fd9c82c15c466f190',
+      name: 'Ciro',
+      lastName: 'Yupanqui Pumachapi',
+      phones: [987564321, 987657890],
+      address: 'Av. Andres Avelino Cáceres',
+      photography: 'ciro.png',
+      document: {
+          type: 'dni',
+          number: 71632672
+      }
+    }).catch(handleFatalError)
 
   //   const client3 = await Client.createOrUpdate({
   //     user_id: '5d13d8a1bd8bfb17bc07afea',

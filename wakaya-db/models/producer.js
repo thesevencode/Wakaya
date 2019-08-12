@@ -38,7 +38,7 @@ module.exports = async function setupProducerModel (uri, config) {
       },
       organization: {
         name: { type: String },
-        _id: { type: String, unique: true }
+        _id: { type: String }
       }
     })
 

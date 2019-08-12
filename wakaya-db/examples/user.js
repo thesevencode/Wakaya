@@ -10,30 +10,33 @@ async function run () {
   }
   const { User } = await db(uri, config).catch(handleFatalError)
 
-  // const User1 = await User.createOrUpdate({
-  //   email: 'denisricardo@gmail.com',
-  //   password: 'ciro1998',
-  //   type: 'producer', // client  or salesman
-  //   terms: true
-  // }).catch(handleFatalError)
+  const User1 = await User.createOrUpdate({
+    email: 'denisricardo@gmail.com',
+    password: 'denis1998',
+    type: 'producer', // client  or salesman
+    terms: true
+  }).catch(handleFatalError)
 
-  // const User2 = await User.createOrUpdate({
-  //   email: 'sadam@gmail.com',
-  //   password: 'sadam4567',
-  //   type: 'salesman' // client  or salesma
-  // }).catch(handleFatalError)
+  const User2 = await User.createOrUpdate({
+    email: 'sadam@gmail.com',
+    password: 'sadam4567',
+    type: 'producer', // client  or salesma
+    terms: true
+  }).catch(handleFatalError)
 
-  // const User3 = await User.createOrUpdate({
-  //   email: 'juan@gmail.com',
-  //   password: 'loper102',
-  //   type: 'client' // client  or salesman
-  // }).catch(handleFatalError)
+  const User3 = await User.createOrUpdate({
+    email: 'juan@gmail.com',
+    password: 'loper102',
+    type: 'client', // client  or salesman
+    terms: true
+  }).catch(handleFatalError)
 
-  // const User4 = await User.createOrUpdate({
-  //   email: 'denis@gmail.com',
-  //   password: 'denis1234',
-  //   type: 'salesman' // client  or salesman
-  // }).catch(handleFatalError)
+  const User4 = await User.createOrUpdate({
+    email: 'ciro@gmail.com',
+    password: 'denis1234',
+    type: 'client', // client  or salesman
+    terms: true
+  }).catch(handleFatalError)
 
   //   console.log('CREATING NEWS USERS')
 

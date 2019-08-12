@@ -24,6 +24,21 @@ module.exports = function (productModel) {
     return result.toJSON()
   }
 
+  async function updateStock (_id, stock) {
+    const cond = {
+      _id
+    }
+
+    const updated = await productModel.updateOne(
+      cond,
+      {
+        $set: {stock}
+      }
+    )
+
+    return updated ? productModel.findOne(cond) : null
+  }
+
   function findByCategories (categories) {
     return productModel.find({
       categories: { $in: categories } // options : $all, $nin, $in
@@ -55,6 +70,7 @@ module.exports = function (productModel) {
 
   return {
     createOrUpdate, // implementado
+    updateStock,//implementado
     findByCategories, // implementado
     findById, // implementado
     findByProducerId, // implementado
