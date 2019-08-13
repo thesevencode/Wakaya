@@ -29,7 +29,6 @@ module.exports = function(productModel) {
         })
     }
 
-<<<<<<< HEAD
   async function updateStock (_id, stock) {
     const cond = {
       _id
@@ -50,12 +49,10 @@ module.exports = function(productModel) {
       categories: { $in: categories } // options : $all, $nin, $in
     })
   }
-=======
     function findById(_id) {
         if (!ObjectId.isValid(_id)) {
             return null
         }
->>>>>>> 0df0b82f79b905113c25e37257952795e0fd53bd
 
         return productModel.findById(_id)
     }
@@ -75,7 +72,6 @@ module.exports = function(productModel) {
         return productModel.find()
     }
 
-<<<<<<< HEAD
   function findAll () {
     return productModel.find()
   }
@@ -90,14 +86,3 @@ module.exports = function(productModel) {
     // findByQualifications : analizar
   }
 }
-=======
-    return {
-        createOrUpdate, // implementado
-        findByCategories, // implementado
-        findById, // implementado
-        findByProducerId, // implementado
-        findAll // implementado
-        // findByQualifications : analizar
-    }
-}
->>>>>>> 0df0b82f79b905113c25e37257952795e0fd53bd
