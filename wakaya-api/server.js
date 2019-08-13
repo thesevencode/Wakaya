@@ -5,6 +5,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const chalk = require('chalk')
 const morgan = require('morgan')
+const fileUpload = require('express-fileupload');
 
 const routes = require('./app/routes')
 
@@ -26,6 +27,7 @@ app.use(function(req, res, next) {
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(morgan('combined'))
+app.use(fileUpload())
 
 
 
