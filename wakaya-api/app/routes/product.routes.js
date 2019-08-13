@@ -18,6 +18,8 @@ module.exports = async() => {
         .get('/', await controller.findAll)
         .get('/id_product/:_id', await controller.findOne)
         .get('/by_categories', await controller.findByCategories) //corregir
+        .get('/categorie', await controller.findAllCategories)
+        .post('/categorie', await controller.createCategorie)
         .post('/product', // Route
             // Middlewares
             authentication.isLogged,

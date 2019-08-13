@@ -7,7 +7,33 @@ const errors = error()
 let message
 
 module.exports = async() => {
-    const { Product } = await DB()
+    const { Product, Categorie } = await DB()
+
+    async function createCategorie(req, res, next) {
+        const resp = response(res)
+        const body = req.body
+        let categorie
+
+        try {
+            categorie = await Categorie.createOrUpdate(body)
+        } catch (e) {
+            return resp.resp500()
+        }
+        resp.resp201(categorie)
+    }
+
+    async function findAllCategories(req, res, next) {
+        const resp = response(res)
+        let categories
+
+        try {
+            categories = await Categorie.findAll()
+        } catch (e) {
+            return resp.resp500()
+        }
+
+        resp.resp200(categories)
+    }
 
     async function create(req, res, next) {
         const resp = response(res)
@@ -91,7 +117,9 @@ module.exports = async() => {
         findAll,
         findByCategories,
         findOne,
-        findByProducer
+        findByProducer,
+        createCategorie,
+        findAllCategories
     }
 }
 
