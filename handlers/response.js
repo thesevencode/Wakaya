@@ -9,7 +9,7 @@ module.exports = (res) => {
             })
         },
         resp401: function(message = '') {
-            return res.status(404).json({
+            return res.status(401).json({
                 status: false,
                 message: 'Unauthorized: No tienes los permisos necesarios ' + message
             })

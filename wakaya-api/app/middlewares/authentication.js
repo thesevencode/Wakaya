@@ -7,7 +7,8 @@ const { response } = require('../../../handlers')
 const middlewares = {
 
     isLogged: function(req, res, next) {
-        const token = req.query.token;
+
+        const token = req.query.token
         let message
 
         const resp = response(res)
@@ -17,16 +18,16 @@ const middlewares = {
             if (err) {
                 return resp.resp401()
             }
-            if (!decoded.user.activate) {
-                return resp.resp401(message = 'El usuario no esta activado')
-            }
+            // if (!decoded.user.activate) {
+            //     return resp.resp401(message = 'El usuario no esta activado')
+            // }
 
             req.user = {
                 user: decoded.user,
                 permissions: decoded.permissions
             }
 
-            next();
+            next()
 
 
         });
@@ -40,7 +41,6 @@ const middlewares = {
             if (err) {
                 return resp.resp401(message = 'Imposible validar para este usuario')
             }
-            console.log(decoded.user)
             req.user = decoded.user
 
             next();

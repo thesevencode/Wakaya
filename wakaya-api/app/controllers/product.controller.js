@@ -7,6 +7,7 @@ const errors = error()
 let message
 
 module.exports = async() => {
+
     const { Product, Categorie } = await DB()
 
     async function createCategorie(req, res, next) {
@@ -36,9 +37,21 @@ module.exports = async() => {
     }
 
     async function create(req, res, next) {
+
         const resp = response(res)
-        const body = req.body
+        let body = req.body
         let product
+
+
+
+        body.id_producer = req.user.user._id
+
+        body.records = {
+            url: "",
+            type: body.type
+        }
+
+        console.log("adsdasd", body)
 
         try {
             product = await Product.createOrUpdate(body)

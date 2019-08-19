@@ -154,6 +154,7 @@ module.exports = async() => {
     async function sendEmailActivate(req, res, next) {
         const resp = response(res)
         const body = req.body
+        let transporter = nodemailer.createTransport(auth.GoogleAuth);
         let message
         let user
 
