@@ -12,8 +12,16 @@ let message
 module.exports = async() => {
 
     async function updateFile(req, res, next) {
-        console.log("adas")
+
         const params = req.params
+        const files = []
+
+        let splitName = ''
+        let fileExtension = ''
+        let path = ''
+        let paths = []
+
+
 
         if (!req.files) {
             return res.status(400).json({
@@ -23,37 +31,52 @@ module.exports = async() => {
             })
         }
 
-        const file = req.files.img
 
-        const allowedFiles = []
-
-        const splitName = file.name.split('.')
-        const fileExtension = splitName[splitName.length - 1]
-
-        const fileName = `${ params.id }-${ new Date().getMilliseconds() }.${ fileExtension }`
-
-
-        // Mover el archivo del temporal a un path
-        // const path = `./public/uploads/${ params.tipo }/${ fileName }`
-        const path = `./public/uploads/${ params.type }/${ fileName }`
-
-        const imagePath = Path.join(__dirname, '../../' + path)
-        file.mv(imagePath, err => {
-
-            if (err) {
-                return res.status(500).json({
-                    ok: false,
-                    mensaje: 'Error al mover archivo',
-                    errors: err
-                })
+        for (const key in req.files) {
+            if (req.files.hasOwnProperty(key)) {
+                const element = req.files[key];
+                files.push(element)
             }
+        }
+        // const allowedFiles = []
+
+        for (const iterator of files) {
+
+            let fileName = ''
+            let imagePath = ''
+
+            splitName = iterator.name.split('.')
+            fileExtension = splitName[splitName.length - 1]
+            fileName = `${ params.id }-${ new Date().getMilliseconds() }.${ fileExtension }`
+            path = `./public/uploads/${ params.type }/${ fileName }`
+            imagePath = Path.join(__dirname, '../../' + path)
+            console.log(new Date().getMilliseconds())
+            await iterator.mv(imagePath, err => {
+
+                if (err) {
+                    return res.status(500).json({
+                        ok: false,
+                        mensaje: 'Error al mover archivo',
+                        errors: err
+                    })
+                }
+
+
+                console.log(imagePath)
+                setTimeout(() => {
+                    uploadByType(params.type, params.id, imagePath, res, req)
+                }, 10)
 
 
 
-            uploadByType(params.type, params.id, imagePath, res, req)
+            })
+        }
 
+        // // Mover el archivo del temporal a un path
+        // // const path = `./public/uploads/${ params.tipo }/${ fileName }`
 
-        })
+        // const 
+
 
     }
 
@@ -167,12 +190,11 @@ async function uploadByType(type, id, path, res, req) {
             return resp.resp500()
         }
 
-        console.log(product)
-
-        product.records.push({
+        await product.records.push({
             url: path,
             type: req.body.type
         })
+
 
         try {
             product = await Product.createOrUpdate(product)
@@ -180,7 +202,7 @@ async function uploadByType(type, id, path, res, req) {
             return resp.resp500()
         }
 
-        resp.resp200(product)
+        // resp.resp200(product)
 
     }
 

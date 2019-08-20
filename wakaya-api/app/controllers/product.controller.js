@@ -40,9 +40,8 @@ module.exports = async() => {
 
         const resp = response(res)
         let body = req.body
+
         let product
-
-
 
         body.id_producer = req.user.user._id
 
@@ -81,7 +80,7 @@ module.exports = async() => {
         let products
 
         try {
-            products = await Product.findByCategories(categories)
+            products = await Product.findByCategories(body.categories)
         } catch (e) {
             return resp.resp500()
         }

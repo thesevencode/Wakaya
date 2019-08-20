@@ -16,7 +16,9 @@ module.exports = async() => {
     const controller = await imageController()
 
     router
-        .post('/:type/:id', authentication.isLogged, await controller.updateFile)
+        .post('/:type/:id',
+            // authentication.isLogged,
+            await controller.updateFile)
         .post('/image', await controller.sendImage)
 
     return router
