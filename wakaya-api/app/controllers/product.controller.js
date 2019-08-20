@@ -100,7 +100,7 @@ module.exports = async() => {
         }
 
         if (!product) {
-            resp.resp404(message = 'no existe un producto con este ID')
+            return resp.resp404(message = 'no existe un producto con este ID')
         }
 
         resp.resp200(product)
@@ -117,7 +117,7 @@ module.exports = async() => {
         }
 
         if (!product) {
-            resp.resp404(message = 'no existe una producto con este ID')
+            return resp.resp404(message = 'no existe una producto con este ID')
         }
 
         resp.resp200(product)
