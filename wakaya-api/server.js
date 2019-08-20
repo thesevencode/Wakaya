@@ -16,8 +16,7 @@ const port = process.env.PORT || 3000
 const app = express()
 const server = http.createServer(app)
 
-
-
+app.use('/public', express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(morgan('combined'))

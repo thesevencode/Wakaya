@@ -1,6 +1,7 @@
 'use strict'
 const Path = require('path')
 const fs = require('fs')
+const os = require('os')
 
 
 const DB = require('../../db')
@@ -16,11 +17,8 @@ module.exports = async() => {
         const params = req.params
         const files = []
 
-        let splitName = ''
-        let fileExtension = ''
-        let path = ''
-        let paths = []
 
+        let i = 0;
 
 
         if (!req.files) {
@@ -44,13 +42,20 @@ module.exports = async() => {
 
             let fileName = ''
             let imagePath = ''
+            let splitName = ''
+            let fileExtension = ''
+            let path = ''
+
+
+            console.log("asdad!", Path.join("/public", "/nell"));
 
             splitName = iterator.name.split('.')
+
             fileExtension = splitName[splitName.length - 1]
-            fileName = `${ params.id }-${ new Date().getMilliseconds() }.${ fileExtension }`
-            path = `./public/uploads/${ params.type }/${ fileName }`
+
+            fileName = `${ params.id }-${ new Date().getMilliseconds() + (i+=1)}.${ fileExtension }`
+            path = `/public/uploads/${ params.type }/${ fileName }`
             imagePath = Path.join(__dirname, '../../' + path)
-            console.log(new Date().getMilliseconds())
             await iterator.mv(imagePath, err => {
 
                 if (err) {
@@ -61,21 +66,14 @@ module.exports = async() => {
                     })
                 }
 
-
-                console.log(imagePath)
                 setTimeout(() => {
-                    uploadByType(params.type, params.id, imagePath, res, req)
-                }, 10)
+                    uploadByType(params.type, params.id, path, res, req)
+                }, 200)
 
 
 
             })
         }
-
-        // // Mover el archivo del temporal a un path
-        // // const path = `./public/uploads/${ params.tipo }/${ fileName }`
-
-        // const 
 
 
     }
@@ -89,14 +87,15 @@ module.exports = async() => {
             })
         }
 
+
+
         var image = req.body.image
 
-        var pathImagen = image
+        var path = Path.join(__dirname, '../..', image)
 
-        if (fs.existsSync(pathImagen)) {
-            res.sendFile(pathImagen)
+        if (fs.existsSync(path)) {
+            res.sendFile(path)
         } else {
-            console.log(__dirname)
             var pathNoImagen = Path.join(__dirname, '../../public/no-img.jpg')
             res.sendFile(pathNoImagen)
         }
@@ -190,11 +189,11 @@ async function uploadByType(type, id, path, res, req) {
             return resp.resp500()
         }
 
-        await product.records.push({
+        product.records.push({
             url: path,
             type: req.body.type
         })
-
+        console.log(product)
 
         try {
             product = await Product.createOrUpdate(product)
@@ -202,7 +201,7 @@ async function uploadByType(type, id, path, res, req) {
             return resp.resp500()
         }
 
-        // resp.resp200(product)
+        resp.resp200(product)
 
     }
 
