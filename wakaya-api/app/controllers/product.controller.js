@@ -91,7 +91,7 @@ module.exports = async() => {
     async function findOne(req, res, next) {
         const resp = response(res)
         const params = req.params
-        let product
+        let product = {}
 
         try {
             product = await Product.findById(params._id)
