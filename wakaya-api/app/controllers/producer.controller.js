@@ -6,7 +6,7 @@ const errors = error()
 let message
 
 module.exports = async() => {
-    const { Producer } = await DB()
+    const { Producer, Sale } = await DB()
 
     // async function create(req, res, next) {
 
@@ -19,6 +19,19 @@ module.exports = async() => {
 
     //     }
     // }
+
+    async function createSale(req, res, next) {
+        const resp = response(res)
+        const body = req.body
+        let sale
+
+        try {
+            sale = await Sale.createOrUpdate(body)
+        } catch (e) {
+            return resp.resp500()
+        }
+        resp.resp201(sale)
+    }
     async function findAll(req, res, next) {
 
         let producers
@@ -156,7 +169,8 @@ module.exports = async() => {
         findByCategories,
         addCategorie,
         update,
-        erase
+        erase,
+        createSale
     }
 }
 

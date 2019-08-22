@@ -31,6 +31,11 @@ module.exports = async() => {
             guard.check('user:write'),
             await controller.addCategorie
         )
+        .post('/sale',
+            authentication.isLogged,
+            guard.check('user:write'),
+            await controller.createSale
+        )
         .delete('/organization',
             authentication.isLogged,
             guard.check('user:write'),

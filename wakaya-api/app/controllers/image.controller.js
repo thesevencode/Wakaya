@@ -46,9 +46,6 @@ module.exports = async() => {
             let fileExtension = ''
             let path = ''
 
-
-            console.log("asdad!", Path.join("/public", "/nell"));
-
             splitName = iterator.name.split('.')
 
             fileExtension = splitName[splitName.length - 1]
@@ -177,7 +174,7 @@ async function uploadByType(type, id, path, res, req) {
             return resp.resp500()
         }
 
-        resp.resp200(client)
+        //resp.resp200(client)
     }
 
     if (type === 'product') {
@@ -201,7 +198,7 @@ async function uploadByType(type, id, path, res, req) {
             return resp.resp500()
         }
 
-        resp.resp200(product)
+        //resp.resp200(product)
 
     }
 
